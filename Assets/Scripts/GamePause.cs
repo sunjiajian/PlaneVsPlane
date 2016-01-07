@@ -24,6 +24,7 @@ public class GamePause : MonoBehaviour {
 
     void OnMouseUpAsButton() {
         GameManager._instance.SwitchGameState();
+        GetComponent<AudioSource>().Play();
         if (GameManager._instance.state == GameState.Gaming) {
             render.sprite = pauseSprites[0];
         }

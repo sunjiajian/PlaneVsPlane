@@ -28,9 +28,13 @@ public class Enemy : MonoBehaviour {
     private float hitTimer = -1;
     public Sprite[] hitSprites;
 
+    private AudioSource[] ass;
+
 	// Use this for initialization
 	void Start () {
         render = GetComponent<SpriteRenderer>();
+
+        ass = GetComponents<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -68,6 +72,10 @@ public class Enemy : MonoBehaviour {
                 explosionTimer = 0;
 
                 GameManager._instance.score += score;
+
+                if (type == EnemyType.Enemy2) {
+                    ass[1].Play();
+                }
             }
         }
         else if (hitTimer < 0 && type != EnemyType.Enemy0) {
