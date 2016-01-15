@@ -35,6 +35,8 @@ public class Enemy : MonoBehaviour {
         render = GetComponent<SpriteRenderer>();
 
         ass = GetComponents<AudioSource>();
+
+        print("enemy start");
 	}
 	
 	// Update is called once per frame

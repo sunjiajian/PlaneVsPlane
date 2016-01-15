@@ -12,8 +12,8 @@ public class Hero : MonoBehaviour {
 
     private SpriteRenderer spriteRender;
 
-    private Vector3 lastMousePosition = Vector3.zero;
-    private bool isMouseDown = false;
+    //private Vector3 lastMousePosition = Vector3.zero;
+    //private bool isMouseDown = false;
 
     public float extraBulletTime = 0;
 
@@ -24,8 +24,8 @@ public class Hero : MonoBehaviour {
     private int upDownDir = 0;      // -1:down      0:none      1:up
     private int leftRightDir = 0;   // -1:left      0:none      1:right
 
-    private float speedX = 1;
-    private float speedY = 2.5f;
+    private float speedX = 3f;
+    private float speedY = 3f;
 
 
 	// Use this for initialization
@@ -67,6 +67,7 @@ public class Hero : MonoBehaviour {
         pos.y += upDownDir * speedY * dt;
         transform.position = pos;
         checkPosition();
+        //transform.Rotate(Vector3.forward * Time.deltaTime * 50);
 
 /*      //mouse control
         if (Input.GetMouseButtonDown(0)) {
@@ -94,9 +95,12 @@ public class Hero : MonoBehaviour {
 	}
 
     private void SwitchExtraBullet(bool open) {
-        gunTop.SwitchFire(!open);
-        gunRight.SwitchFire(open);
-        gunLeft.SwitchFire(open);
+        gunTop.SwitchFire(false);
+        gunRight.SwitchFire(false);
+        gunLeft.SwitchFire(false);
+        //gunTop.SwitchFire(!open);
+        //gunRight.SwitchFire(open);
+        //gunLeft.SwitchFire(open);
     }
 
     void checkPosition() {

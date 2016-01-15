@@ -3,23 +3,27 @@ using System.Collections;
 
 public class TrackBullet : MonoBehaviour {
 
-    public float speed = 4f;
+    private float speed = 6f;
 
     private Enemy target;
 
+    public Vector3 diretion;
+
+    private float minChangeDireDis = 0.5f;
+
 	// Use this for initialization
 	void Start () {
-        print("born");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        //transform.Translate(Vector3.up * speed * Time.deltaTime);
         float dt = Time.deltaTime;
 
-        if (target != null) {
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * dt);
+        if (target != null && !target.isDead &&  Vector3.Distance(target.transform.position, transform.position) > minChangeDireDis) {
+            diretion = target.transform.position - transform.position;
+            diretion.Normalize();
         }
+        transform.position += diretion * speed * dt;
 
         if (transform.position.y > 6f || transform.position.y < -6f || transform.position.x > 5f || transform.position.x < -5f) {
             Destroy(gameObject);
@@ -35,12 +39,10 @@ public class TrackBullet : MonoBehaviour {
         }
     }
 
-    public void printss() {
-        print("printss");
-    }
-
     public void SetTarget(GameObject t) {
         target = t.GetComponent<Enemy>();
-        print("SetTarget");
+
+        diretion = target.transform.position - transform.position;
+        diretion.Normalize();
     }
 }

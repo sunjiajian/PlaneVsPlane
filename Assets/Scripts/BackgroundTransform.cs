@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BackgroundTransform : MonoBehaviour {
 
-    public float speed = 8f;
+    private float speed = 2f;
 
 	// Use this for initialization
 	void Start () {
