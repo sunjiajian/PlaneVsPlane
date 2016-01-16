@@ -2,7 +2,8 @@
 using System.Collections;
 
 
-public class Hero : MonoBehaviour {
+public class Hero : MonoBehaviour
+{
 
     public bool is_animation = true;
 
@@ -28,36 +29,46 @@ public class Hero : MonoBehaviour {
     private float speedY = 3f;
 
 
-	// Use this for initialization
-	void Start () {
-		spriteRender = GetComponent<SpriteRenderer>();
+    // Use this for initialization
+    void Start()
+    {
+        spriteRender = GetComponent<SpriteRenderer>();
         SwitchExtraBullet(false);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+
+        print(Vector3.Angle(Vector3.up, Vector3.left));
+        print(Vector3.Angle(Vector3.left, Vector3.up));
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         float dt = Time.deltaTime;
 
-        if (is_animation) {
+        if (is_animation)
+        {
             timer += dt;
             int frameIndex = (int)(timer / (1f / frameCountPerseconds));
             spriteRender.sprite = sprites[frameIndex % 2];
         }
 
         //keyboard control
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyUp(KeyCode.S)) {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyUp(KeyCode.S))
+        {
             upDownDir += 1;
             upDownDir = upDownDir > 1 ? 1 : upDownDir;
         }
-        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyDown(KeyCode.S)) {
+        if (Input.GetKeyUp(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+        {
             upDownDir -= 1;
             upDownDir = upDownDir < -1 ? -1 : upDownDir;
         }
-        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyUp(KeyCode.A)) {
+        if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyUp(KeyCode.A))
+        {
             leftRightDir += 1;
             leftRightDir = leftRightDir > 1 ? 1 : leftRightDir;
         }
-        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyDown(KeyCode.A)) {
+        if (Input.GetKeyUp(KeyCode.D) || Input.GetKeyDown(KeyCode.A))
+        {
             leftRightDir -= 1;
             leftRightDir = leftRightDir < -1 ? -1 : leftRightDir;
         }
@@ -69,32 +80,35 @@ public class Hero : MonoBehaviour {
         checkPosition();
         //transform.Rotate(Vector3.forward * Time.deltaTime * 50);
 
-/*      //mouse control
-        if (Input.GetMouseButtonDown(0)) {
-            isMouseDown = true;
-        }
-        if (Input.GetMouseButtonUp(0)) {
-            lastMousePosition = Vector3.zero;
-            isMouseDown = false;
-        }
-        if (isMouseDown && GameManager._instance.state == GameState.Gaming) {
-            if (lastMousePosition != Vector3.zero) {
-                Vector3 offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
-                transform.position = transform.position + offset;
-                checkPosition();
-            }
-            lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        }*/
+        /*      //mouse control
+                if (Input.GetMouseButtonDown(0)) {
+                    isMouseDown = true;
+                }
+                if (Input.GetMouseButtonUp(0)) {
+                    lastMousePosition = Vector3.zero;
+                    isMouseDown = false;
+                }
+                if (isMouseDown && GameManager._instance.state == GameState.Gaming) {
+                    if (lastMousePosition != Vector3.zero) {
+                        Vector3 offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
+                        transform.position = transform.position + offset;
+                        checkPosition();
+                    }
+                    lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                }*/
 
-        if (extraBulletTime > 0) {
+        if (extraBulletTime > 0)
+        {
             extraBulletTime -= dt;
-            if (extraBulletTime < 0) {
+            if (extraBulletTime < 0)
+            {
                 SwitchExtraBullet(false);
             }
         }
-	}
+    }
 
-    private void SwitchExtraBullet(bool open) {
+    private void SwitchExtraBullet(bool open)
+    {
         gunTop.SwitchFire(false);
         gunRight.SwitchFire(false);
         gunLeft.SwitchFire(false);
@@ -103,28 +117,36 @@ public class Hero : MonoBehaviour {
         //gunLeft.SwitchFire(open);
     }
 
-    void checkPosition() {
+    void checkPosition()
+    {
         Vector3 pos = transform.position;
-        if (pos.x < -3) {
+        if (pos.x < -3)
+        {
             pos.x = -3;
         }
-        else if (pos.x > 3) {
+        else if (pos.x > 3)
+        {
             pos.x = 3;
         }
-        if (pos.y < -5) {
+        if (pos.y < -5)
+        {
             pos.y = -5;
         }
-        else if (pos.y > 5) {
+        else if (pos.y > 5)
+        {
             pos.y = 5;
         }
 
         transform.position = pos;
     }
-    
-    public void OnTriggerEnter2D(Collider2D other) {
-        if (other.tag == "Award") {
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Award")
+        {
             Award aw = other.GetComponent<Award>();
-            if (aw.type == 0) {
+            if (aw.type == 0)
+            {
                 extraBulletTime = 10;
                 SwitchExtraBullet(true);
             }

@@ -9,7 +9,8 @@ public enum GameState
     Pause,
 }
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager _instance;
 
@@ -18,23 +19,28 @@ public class GameManager : MonoBehaviour {
 
     public GameState state = GameState.Gaming;
 
-    void Awake() {
+    void Awake()
+    {
         _instance = this;
     }
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         scoreText = GameObject.FindGameObjectWithTag("ScoreBoard").GetComponent<Text>();
         state = GameState.Gaming;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        scoreText.text = "Score:" + score;
-	}
+    }
 
-    public void SwitchGameState() {
-        switch (state) { 
+    // Update is called once per frame
+    void Update()
+    {
+        scoreText.text = "Score:" + score;
+    }
+
+    public void SwitchGameState()
+    {
+        switch (state)
+        {
             case GameState.Gaming:
                 state = GameState.Pause;
                 Time.timeScale = 0;

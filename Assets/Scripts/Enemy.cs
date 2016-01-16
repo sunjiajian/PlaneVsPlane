@@ -7,7 +7,8 @@ public enum EnemyType {
     Enemy2,
 }
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
 
     public float speed = 5f;
     public float edge;
@@ -30,57 +31,69 @@ public class Enemy : MonoBehaviour {
 
     private AudioSource[] ass;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         render = GetComponent<SpriteRenderer>();
 
         ass = GetComponents<AudioSource>();
 
         print("enemy start");
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
-        if (transform.position.y < edge) {
+        if (transform.position.y < edge)
+        {
             Destroy(gameObject);
         }
 
-        if (isDead) {
+        if (isDead)
+        {
             explosionTimer += Time.deltaTime;
             int frameIndex = (int)(explosionTimer / animationRate);
-            if (frameIndex >= explosionSprites.Length) {
+            if (frameIndex >= explosionSprites.Length)
+            {
                 Destroy(gameObject);
                 return;
             }
             render.sprite = explosionSprites[frameIndex];
         }
-        else if (hitTimer >= 0) {
+        else if (hitTimer >= 0)
+        {
             hitTimer += Time.deltaTime;
             int frameIndex = (int)(hitTimer / animationRate);
-            if (frameIndex >= hitSprites.Length) {
+            if (frameIndex >= hitSprites.Length)
+            {
                 hitTimer = -1;
                 return;
             }
             render.sprite = hitSprites[frameIndex];
         }
-	}
+    }
 
-    void OnHit() {
+    void OnHit()
+    {
         hp -= 1;
-        if (hp <= 0) {
-            if (!isDead) {
+        if (hp <= 0)
+        {
+            if (!isDead)
+            {
                 isDead = true;
                 explosionTimer = 0;
 
                 GameManager._instance.score += score;
 
-                if (type == EnemyType.Enemy2) {
+                if (type == EnemyType.Enemy2)
+                {
                     ass[1].Play();
                 }
             }
         }
-        else if (hitTimer < 0 && type != EnemyType.Enemy0) {
+        else if (hitTimer < 0 && type != EnemyType.Enemy0)
+        {
             hitTimer = 0;
         }
     }

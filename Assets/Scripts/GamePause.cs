@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GamePause : MonoBehaviour {
+public class GamePause : MonoBehaviour
+{
 
     public Sprite[] pauseSprites;
     public Sprite[] startSprites;
@@ -10,46 +11,58 @@ public class GamePause : MonoBehaviour {
 
     private SpriteRenderer render;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         isDownState = false;
         render = GetComponent<SpriteRenderer>();
         render.sprite = pauseSprites[0];
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    }
 
-    void OnMouseUpAsButton() {
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    void OnMouseUpAsButton()
+    {
         GameManager._instance.SwitchGameState();
         GetComponent<AudioSource>().Play();
-        if (GameManager._instance.state == GameState.Gaming) {
+        if (GameManager._instance.state == GameState.Gaming)
+        {
             render.sprite = pauseSprites[0];
         }
-        else {
+        else
+        {
             render.sprite = startSprites[0];
         }
     }
 
-    void OnMouseDown() {
+    void OnMouseDown()
+    {
         isDownState = true;
-        if (GameManager._instance.state == GameState.Gaming) {
+        if (GameManager._instance.state == GameState.Gaming)
+        {
             render.sprite = pauseSprites[1];
         }
-        else {
+        else
+        {
             render.sprite = startSprites[1];
         }
     }
 
-    void OnMouseExit() {
-        if (isDownState) {
+    void OnMouseExit()
+    {
+        if (isDownState)
+        {
             isDownState = false;
-            if (GameManager._instance.state == GameState.Gaming) {
+            if (GameManager._instance.state == GameState.Gaming)
+            {
                 render.sprite = pauseSprites[0];
             }
-            else {
+            else
+            {
                 render.sprite = startSprites[0];
             }
         }
