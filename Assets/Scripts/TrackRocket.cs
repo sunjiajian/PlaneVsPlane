@@ -11,10 +11,9 @@ public class TrackRocket : MonoBehaviour
     public float edgeX;
     public float edgeY;
 
-    private float speed = 2f;
-    //private float startSpeed = 2f;
-    private float maxSpeed = 6f;
-    private float acceleration = 2f;
+    private float speed = 1f;
+    private float maxSpeed = 10f;
+    private float acceleration = 5f;
 
     private Enemy target = null;
     private TrackRocketState trackState = TrackRocketState.NOTARGET;

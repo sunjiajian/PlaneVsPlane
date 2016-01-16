@@ -3,7 +3,6 @@ using System.Collections;
 
 public class Gun : MonoBehaviour
 {
-
     public GameObject bullet;
     public float rate = 0.3f;
 

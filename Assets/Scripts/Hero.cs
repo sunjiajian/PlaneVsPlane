@@ -4,7 +4,6 @@ using System.Collections;
 
 public class Hero : MonoBehaviour
 {
-
     public bool is_animation = true;
 
     public int frameCountPerseconds = 10;

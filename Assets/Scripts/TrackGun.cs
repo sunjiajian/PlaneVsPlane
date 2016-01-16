@@ -3,7 +3,6 @@ using System.Collections;
 
 public class TrackGun : MonoBehaviour
 {
-
     private float rate = 0.1f;
     private float tick = 0;
     private float maxDistance = 2f;
