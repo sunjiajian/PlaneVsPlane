@@ -6,13 +6,16 @@ enum TrackRocketState {
     HASTARGET,
 }
 
+//追踪导弹
+//实现了初始速度，加速度，最小最大追踪距离，最大追踪角度
+//     自行寻找目标，对目标转向
 public class TrackRocket : MonoBehaviour
 {
     public float edgeX;
     public float edgeY;
 
-    private float speed = 1f;
-    private float maxSpeed = 1f;
+    private float speed = 2f;
+    private float maxSpeed = 8f;
     private float acceleration = 2f;
 
     private Enemy target = null;
@@ -21,7 +24,7 @@ public class TrackRocket : MonoBehaviour
     private Vector3 myDirection = Vector3.up;
     private float minTargetDis = 0.5f;
     private float maxTargetDis = 20f;
-    private float maxTrackAngle = 90f;
+    private float maxTrackAngle = 30f;
 
     private float myAngle = 0f;
 
