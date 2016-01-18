@@ -12,16 +12,18 @@ public class TrackRocket : MonoBehaviour
     public float edgeY;
 
     private float speed = 1f;
-    private float maxSpeed = 10f;
-    private float acceleration = 5f;
+    private float maxSpeed = 1f;
+    private float acceleration = 2f;
 
     private Enemy target = null;
     private TrackRocketState trackState = TrackRocketState.NOTARGET;
 
     private Vector3 myDirection = Vector3.up;
-    private float minChangeDireDis = 0.5f;
-    private float maxTargetDis = 2f;
-    private float maxTrackAngle = 45f;
+    private float minTargetDis = 0.5f;
+    private float maxTargetDis = 20f;
+    private float maxTrackAngle = 90f;
+
+    private float myAngle = 0f;
 
     // Use this for initialization
     void Start()
@@ -39,10 +41,14 @@ public class TrackRocket : MonoBehaviour
             speed = speed > maxSpeed ? maxSpeed : speed;
         }
 
-        if ((hasTarget() || findTarget()) && Vector3.Distance(target.transform.position, transform.position) > minChangeDireDis)
+        if (hasTarget() || findTarget())
         {
             myDirection = target.transform.position - transform.position;
             myDirection.Normalize();
+
+            float angle = Vector3.Angle(Vector3.up, myDirection) * fuhao(myDirection.x) * -1;
+            transform.Rotate(Vector3.forward * (angle - myAngle));
+            myAngle = angle;
         }
         transform.position += myDirection * speed * dt;
 
@@ -52,12 +58,18 @@ public class TrackRocket : MonoBehaviour
         }
     }
 
+    private float fuhao(float x)
+    {
+        return x < 0 ? -1 : 1;
+    }
+
     private bool hasTarget()
     {
         if (trackState == TrackRocketState.HASTARGET && target != null && !target.isDead)
         {
-            Vector3 targetDirection = target.transform.position - transform.position;
-            if (Vector3.Angle(myDirection, targetDirection) < maxTrackAngle)
+            float ang = Vector3.Angle(myDirection, target.transform.position - transform.position);
+            float dis = Vector3.Distance(transform.position, target.transform.position);
+            if (ang <= maxTrackAngle && dis >= minTargetDis && dis <= maxTargetDis)
             {
                 return true;
             }
@@ -73,11 +85,11 @@ public class TrackRocket : MonoBehaviour
 
         foreach (var enemy in enemys)
         {
-            if (enemy.GetComponent<Enemy>() != null && !enemy.GetComponent<Enemy>().isDead && enemy.transform.position.y > transform.position.y + 0.5f)
+            if (enemy.GetComponent<Enemy>() != null && !enemy.GetComponent<Enemy>().isDead)
             {
-                Vector3 targetDirection = enemy.transform.position - transform.position;
+                float ang = Vector3.Angle(myDirection, enemy.transform.position - transform.position);
                 float dis = Vector3.Distance(transform.position, enemy.transform.position);
-                if (dis < minDis && Vector3.Angle(myDirection, targetDirection) < maxTrackAngle)
+                if (ang <= maxTrackAngle && dis >= minTargetDis && dis < minDis)
                 {
                     minDis = dis;
                     minDisEnemy = enemy;

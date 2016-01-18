@@ -27,6 +27,11 @@ public class Hero : MonoBehaviour
     private float speedX = 3f;
     private float speedY = 3f;
 
+/*
+    public float myAngle = 0f;
+    public Vector3 mouPos;
+    public Vector3 dirc;
+    public float angle;*/
 
     // Use this for initialization
     void Start()
@@ -77,24 +82,18 @@ public class Hero : MonoBehaviour
         pos.y += upDownDir * speedY * dt;
         transform.position = pos;
         checkPosition();
-        //transform.Rotate(Vector3.forward * Time.deltaTime * 50);
+        //transform.Rotate(Vector3.forward * Time.deltaTime * 90);
 
-        /*      //mouse control
-                if (Input.GetMouseButtonDown(0)) {
-                    isMouseDown = true;
-                }
-                if (Input.GetMouseButtonUp(0)) {
-                    lastMousePosition = Vector3.zero;
-                    isMouseDown = false;
-                }
-                if (isMouseDown && GameManager._instance.state == GameState.Gaming) {
-                    if (lastMousePosition != Vector3.zero) {
-                        Vector3 offset = Camera.main.ScreenToWorldPoint(Input.mousePosition) - lastMousePosition;
-                        transform.position = transform.position + offset;
-                        checkPosition();
-                    }
-                    lastMousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                }*/
+/*
+        //mouse control
+        if (Input.GetMouseButtonDown(0))
+        {
+            mouPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            dirc = new Vector3(mouPos.x, mouPos.y, 0) - transform.position;
+            angle = Vector3.Angle(Vector3.up, dirc) * fuhao(dirc.x) * -1;
+            transform.Rotate(Vector3.forward * (angle - myAngle));
+            myAngle = angle;
+        }*/
 
         if (extraBulletTime > 0)
         {
@@ -104,6 +103,11 @@ public class Hero : MonoBehaviour
                 SwitchExtraBullet(false);
             }
         }
+    }
+
+    private float fuhao(float x)
+    {
+        return x < 0 ? -1 : 1;
     }
 
     private void SwitchExtraBullet(bool open)
